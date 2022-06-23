@@ -11,7 +11,7 @@ client = TestClient(app)
 def test_index() -> None:
     response = client.get("/producer")
     assert response.status_code == 200
-    assert response.json() == {"Hello": "The World"}
+    assert response.json() == {"secret": ANY, "ts": ANY}
 
 
 def test_index_with_latency() -> None:
