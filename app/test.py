@@ -1,4 +1,5 @@
 import time
+from unittest.mock import ANY
 
 from fastapi.testclient import TestClient
 
@@ -21,7 +22,7 @@ def test_index_with_latency() -> None:
 
     assert e - s > 0.5
     assert response.status_code == 200
-    assert response.json() == {"Hello": "The World"}
+    assert response.json() == {"secret": ANY, "ts": ANY}
 
 
 def test_health() -> None:

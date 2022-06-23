@@ -1,3 +1,5 @@
+from datetime import datetime
+import secrets
 import time
 from typing import Dict
 
@@ -25,7 +27,7 @@ def set_latency(value: float) -> None:
 def index() -> Dict[str, str]:
     if latency > 0:
         time.sleep(latency)
-    return {"Hello": "The World"}
+    return {"secret": secrets.token_hex(), "ts": datetime.utcnow().isoformat()}
 
 
 @app.get("/health")
