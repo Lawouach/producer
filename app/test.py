@@ -8,7 +8,7 @@ client = TestClient(app)
 
 
 def test_index() -> None:
-    response = client.get("/")
+    response = client.get("/producer")
     assert response.status_code == 200
     assert response.json() == {"Hello": "The World"}
 
@@ -16,7 +16,7 @@ def test_index() -> None:
 def test_index_with_latency() -> None:
     set_latency(0.51)
     s = time.time()
-    response = client.get("/")
+    response = client.get("/producer")
     e = time.time()
 
     assert e - s > 0.5
@@ -31,7 +31,7 @@ def test_health() -> None:
 
 
 def test_set_latency() -> None:
-    response = client.get("/inject/latency?value=0.45")
+    response = client.get("/producer/inject/latency?value=0.45")
     assert response.status_code == 200
     assert response.json() == ""
     assert get_latency() == 0.45
