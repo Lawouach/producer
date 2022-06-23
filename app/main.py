@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor  # type: ignore
 from prometheus_fastapi_instrumentator import Instrumentator
 
-app = FastAPI(root_path="/producer")
+app = FastAPI()
 FastAPIInstrumentor.instrument_app(app)
 Instrumentator().instrument(app).expose(app)
 
@@ -21,19 +21,19 @@ def set_latency(value: float) -> None:
     latency = value
 
 
-@app.get("/producer")
+@app.get("/")
 def index() -> Dict[str, str]:
     if latency > 0:
         time.sleep(latency)
     return {"Hello": "The World"}
 
 
-@app.get("/producer/health")
+@app.get("/health")
 def health() -> str:
     return ""
 
 
-@app.get("/producer/inject/latency")
+@app.get("/inject/latency")
 def inject_latency(value: float = 0) -> str:
     set_latency(value)
     return ""
