@@ -21,7 +21,7 @@ def set_latency(value: float) -> None:
     latency = value
 
 
-@app.get("/")
+@app.get("/producer")
 def index() -> Dict[str, str]:
     if latency > 0:
         time.sleep(latency)
@@ -33,7 +33,7 @@ def health() -> str:
     return ""
 
 
-@app.get("/inject/latency")
+@app.get("/producer/inject/latency")
 def inject_latency(value: float = 0) -> str:
     set_latency(value)
     return ""
